@@ -1,38 +1,4 @@
-10 ; 10
-(+ 5 3 4) ; 12
-(- 9 1) ; 8
-(/ 6 2) ; 3
-( + (* 2 4) (- 4 6)) ; ( + 8 -2) = 6
-(define a 3) ; a = 3
-(define b (+ a 1)) ; b = 4
-(+ a b (* a b)) ; (+ 3 4 (* 3 4)) = 19
-( = a b) ; #f
-(if (and (> b a ) (< b (* a  b)))
-    b
-    a) ; 4
-(* (cond ( (> a b) a)
-         ((< a b) b)
-         (else -1))
-   (+ a 1)) ; 16
-
-( / (+ 5 4 (- 2 (- 3 (+ 6 (/ 4 5)))))
-    (* 3 (- 6 2) (- 2 7)))
-
-(define (sum-of-squares-of-largest-two a b c)
-  (cond ((and (<= a b) (<= a c)) (+ (* b b) (* c c))) ; a — наименьшее
-        ((and (<= b a) (<= b c)) (+ (* a a) (* c c))) ; b — наименьшее
-        (else (+ (* a a) (* b b)))))                  ; c — наименьшее
-(sum-of-squares-of-largest-two 1 2 3)
-
-(define (a-plus-abs-b a b)
-((if (> b 0) + -) a b))
-
-
-(define (sumsquare a b)
-(if (> a b)
-0
-(+ (* a a) (sumsquare (+ 1 a) b)) ))
-
+; FUNCTIONS AS DATA
 ; возводим в степень любое число
 (define (to-the-power number power)
   (if (= power 0)
@@ -44,3 +10,58 @@
   (if (> a b)
       0
       (+ (to-the-power a power) (sum-power (+ a 1) b power))))
+
+; GIVE A FUNCTION AS AN ARGUMENT TO ANOTHER FUNCTION
+(define (sum-power FN a b)
+  (if (> a b)
+      0
+      (+ (FN a) (sum-power FN (+ a 1) b))))
+(define (square a)
+  (* a a))
+(sum-power square 3 5)
+
+
+(member `as `(asdasdfd asdf as))
+
+; LAMBDA AS A WAY TO DEFINE A FUNCTION
+(define square (lambda (x) (* x x)))
+(square 123)
+square
+
+; CONDITIONAL
+(define (abs2 x)
+  (cond ((< x 0) (- x))
+        ((= x 0) 0)
+        ((> x 0) x)))
+(abs2 -3)
+
+;IF ELSE
+(define (abs3 x)
+  (if (< x 0)
+      (- x)
+      x))
+(abs3 -3)
+
+;SQUARE ROOT
+
+;averaging two numbers
+(define (average x y)
+  (/ (+ x y) 2))
+
+; look if the guess is good enough
+(define (try guess x)
+  (if (good-enough? guess x)
+      guess
+      (try (improve guess x) x)))
+
+;the square root function
+(define (sqrt1 x) (try 1 x))
+
+; (x + g/x) / 2 for the next guess
+(define (improve guess x)
+  (average guess (/ x guess)))
+
+; see if the difference between a square guess and the number is small enough
+(define (good-enough? guess x)
+  (< (abs(- (square guess) x)) 0.001))
+(sqrt1 9)
