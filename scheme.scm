@@ -85,6 +85,8 @@ square
 ;    (+ (-1+ x) (1+ y))
 ;    )
 ;  )
+
+; a bit harder. about O notations and how we should design our code so that it will not make too many steps.
 (define (fibonacci x y number)
   (if (= number 0)
     x
