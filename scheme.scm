@@ -1,3 +1,4 @@
+#lang racket
 ; FUNCTIONS AS DATA
 ; возводим в степень любое число
 (define (to-the-power number power)
@@ -12,13 +13,15 @@
       (+ (to-the-power a power) (sum-power (+ a 1) b power))))
 
 ; GIVE A FUNCTION AS AN ARGUMENT TO ANOTHER FUNCTION
-(define (sum-power FN a b)
-  (if (> a b)
-      0
-      (+ (FN a) (sum-power FN (+ a 1) b))))
-(define (square a)
-  (* a a))
-(sum-power square 3 5)
+; commented out cuz of double defining the same function bruh
+
+;(define (sum-power FN a b)
+;  (if (> a b)
+;      0
+;      (+ (FN a) (sum-power FN (+ a 1) b))))
+;(define (square a)
+;  (* a a))
+;(sum-power square 3 5)
 
 
 (member `as `(asdasdfd asdf as))
@@ -43,7 +46,7 @@ square
 (abs3 -3)
 
 ;SQUARE ROOT
-
+; just talking about the scheme syntax and basic operations bruh. but the implementations are great tho
 ;averaging two numbers
 (define (average x y)
   (/ (+ x y) 2))
@@ -65,3 +68,31 @@ square
 (define (good-enough? guess x)
   (< (abs(- (square guess) x)) 0.001))
 (sqrt1 9)
+
+;SUBSTITUTION MODEL
+;just talking about how the arguments replace variables in the body of a function for like an hour bruh
+(define (sos x y)
+  (+(sq x) (sq y)))
+(define (sq x)
+  (* x x)
+)
+(sos 3 4)
+
+;(define (+ x y)
+;  ; just a small implementation of plus function through incrementing till it's the result
+;  (if (= x 0)
+;    y
+;    (+ (-1+ x) (1+ y))
+;    )
+;  )
+(define (fibonacci x y number)
+  (if (= number 0)
+    x
+    (fibonacci y (+ x y) (- number 1))))
+(fibonacci 0 1 10)
+(define (fib n)
+  (if (< n 2)
+    n
+    (+ (fib(- n 1))
+       (fib(- n 2)))))
+(fib 10)
